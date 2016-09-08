@@ -25,8 +25,11 @@ setup () {
     # Label the lower directory with a read/only type (test_overlay_files_ro_t)
     # not writable by overlay process types
     # (test_overlay_mounter_t, test_overlay_client_t)
-    chcon -R -t test_overlay_files_ro_t $BASEDIR/lower
-
+    if [ -z "$1" ]; then
+        chcon -R -t test_overlay_files_ro_t $BASEDIR/lower
+    else
+        chcon -R -t test_overlay_mounter_files_t $BASEDIR/lower
+    fi
     # Label noaccessfile and noaccessdir, with types not accessable to either the
     # mounter or the client types
     chcon -t test_overlay_files_noaccess_t $BASEDIR/lower/noaccessfile $BASEDIR/lower/noaccessdir $BASEDIR/lower/null_noaccess
@@ -62,5 +65,5 @@ EOF
 
 # Main Script
 [ -z "$BASEDIR" ] && BASEDIR=$PWD
-setup
+setup "$CONTEXT"
 mount "$CONTEXT"
