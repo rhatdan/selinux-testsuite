@@ -15,6 +15,7 @@ setup () {
     echo noaccess > $BASEDIR/lower/noaccessfile
     echo mounter > $BASEDIR/lower/mounterfile
     echo transition > $BASEDIR/lower/transition
+    cp $BASEDIR/badentrypoint $BASEDIR/lower/
 
     mknod $BASEDIR/lower/null_read c 1 3
     mknod $BASEDIR/lower/null_write c 1 3
